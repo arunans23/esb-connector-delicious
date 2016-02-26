@@ -134,10 +134,12 @@
         </dependency>
     </dependencies>
     <scm>
-        <connection>scm:git:https://github.com/wso2-extensions/esb-connector-delicious.git
+        <connection>
+            scm:git:https://github.com/wso2-extensions/esb-connector-delicious.git
         </connection>
         <url>https://github.com/wso2-extensions/esb-connector-delicious.git</url>
-        <developerConnection>scm:git:https://github.com/wso2-extensions/esb-connector-delicious
+        <developerConnection>
+            scm:git:https://github.com/wso2-extensions/esb-connector-delicious
         </developerConnection>
         <tag>HEAD</tag>
     </scm>
