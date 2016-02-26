@@ -29,7 +29,7 @@ import javax.xml.namespace.QName;
 
 public class DeliciousConnectoreIntegrationTest extends ConnectorIntegrationTestBase {
 
-    protected static final String CONNECTOR_NAME = "delicious-connector-1.0.0";
+    protected static final String CONNECTOR_NAME = "delicious-connector-1.0.1-SNAPSHOT";
     private String validAuthorization;
     private String invalidAuthorization;
 
