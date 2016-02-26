@@ -17,24 +17,17 @@
  ~  under the License.
 -->
 <template name="deletePost" xmlns="http://ws.apache.org/ns/synapse">
-
     <parameter name="url" description="required — The url of the item"/>
-
     <sequence>
         <property name="uri.var.delUrl" expression="$func:url" type="STRING"/>
-
         <property name="uri.var.apiParameters"
                   expression="fn:concat(get-property('uri.var.apiParameters'),'&amp;url=',get-property('uri.var.delUrl'))"/>
-
         <property name="Accept-Encoding" value="deflate" scope="transport"/>
-
         <call>
             <endpoint>
                 <http method="GET"
                       uri-template="{uri.var.delicious.url}/v1/posts/delete?{+uri.var.apiParameters}"/>
             </endpoint>
         </call>
-
     </sequence>
-
 </template>

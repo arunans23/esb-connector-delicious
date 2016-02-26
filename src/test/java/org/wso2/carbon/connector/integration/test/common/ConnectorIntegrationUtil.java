@@ -65,9 +65,7 @@ public class ConnectorIntegrationUtil {
     private static final String ENC = "UTF-8";
     private static final String OAUTH_SIGNATURE = "oauth_signature";
 
-
     public static final String ESB_CONFIG_LOCATION = "artifacts" + File.separator + "ESB" + File.separator + "config";
-
     private static final Log log = LogFactory.getLog(ConnectorIntegrationUtil.class);
 
     public static void uploadConnector(String repoLocation, MediationLibraryUploaderStub mediationLibUploadStub,
@@ -76,8 +74,6 @@ public class ConnectorIntegrationUtil {
         List<LibraryFileItem> uploadLibraryInfoList = new ArrayList<LibraryFileItem>();
         LibraryFileItem uploadedFileItem = new LibraryFileItem();
         uploadedFileItem.setDataHandler(new DataHandler(new URL("file:" + "///" + repoLocation + "/" + strFileName)));
-
-
         uploadedFileItem.setFileName(strFileName);
         uploadedFileItem.setFileType("zip");
         uploadLibraryInfoList.add(uploadedFileItem);
@@ -107,10 +103,8 @@ public class ConnectorIntegrationUtil {
                 }
             }
         }
-
         HttpURLConnection httpConn = (HttpURLConnection) connection;
         int responseCode = httpConn.getResponseCode();
-
         return responseCode;
     }
 
@@ -136,10 +130,8 @@ public class ConnectorIntegrationUtil {
                 }
             }
         }
-
         HttpURLConnection httpConn = (HttpURLConnection) connection;
         int responseCode = httpConn.getResponseCode();
-
         return responseCode;
     }
 
@@ -170,10 +162,8 @@ public class ConnectorIntegrationUtil {
                 }
             }
         }
-
 //        HttpURLConnection httpConn = (HttpURLConnection) connection;
         InputStream response;
-
         if (connection.getResponseCode() >= 400) {
             response = connection.getErrorStream();
         } else {
@@ -194,7 +184,6 @@ public class ConnectorIntegrationUtil {
             }
         }
         JSONObject jsonObject = new JSONObject(out);
-
         return jsonObject;
     }
 
@@ -219,16 +208,13 @@ public class ConnectorIntegrationUtil {
                 }
             }
         }
-
         HttpURLConnection httpConn = (HttpURLConnection) connection;
         InputStream response;
-
         if (httpConn.getResponseCode() >= 400) {
             response = httpConn.getErrorStream();
         } else {
             response = connection.getInputStream();
         }
-
         String out = "{}";
         if (response != null) {
             StringBuilder sb = new StringBuilder();
@@ -237,14 +223,11 @@ public class ConnectorIntegrationUtil {
             while ((len = response.read(bytes)) != -1) {
                 sb.append(new String(bytes, 0, len));
             }
-
             if (!sb.toString().trim().isEmpty()) {
                 out = sb.toString();
             }
         }
-
         JSONObject jsonObject = new JSONObject(out);
-
         return jsonObject;
     }
 
@@ -269,16 +252,13 @@ public class ConnectorIntegrationUtil {
                 }
             }
         }
-
         HttpURLConnection httpConn = (HttpURLConnection) connection;
         InputStream response;
-
         if (httpConn.getResponseCode() >= 400) {
             response = httpConn.getErrorStream();
         } else {
             response = connection.getInputStream();
         }
-
         String out = "{}";
         if (response != null) {
             StringBuilder sb = new StringBuilder();
@@ -287,16 +267,12 @@ public class ConnectorIntegrationUtil {
             while ((len = response.read(bytes)) != -1) {
                 sb.append(new String(bytes, 0, len));
             }
-
             if (!sb.toString().trim().isEmpty()) {
                 out = sb.toString();
             }
         }
-
         OMElement omElement = AXIOMUtil.stringToOM(out);
-
         return omElement;
-
     }
 
     public static Properties getConnectorConfigProperties(String connectorName) {
@@ -313,18 +289,15 @@ public class ConnectorIntegrationUtil {
             if (connectorPropertyFile.exists()) {
                 inputStream = new FileInputStream(connectorPropertyFile);
             }
-
             if (inputStream != null) {
                 Properties prop = new Properties();
                 prop.load(inputStream);
                 inputStream.close();
                 return prop;
             }
-
         } catch (IOException ignored) {
             log.error("automation.properties file not found, please check your configuration");
         }
-
         return null;
     }
 
@@ -375,14 +348,11 @@ public class ConnectorIntegrationUtil {
         try {
             reader = new BufferedReader(new FileReader(path));
             String line = null;
-
             String ls = System.getProperty("line.separator");
-
             while ((line = reader.readLine()) != null) {
                 stringBuilder.append(line);
                 stringBuilder.append(ls);
             }
-
         } catch (IOException ioe) {
             log.error("Error reading request from file.", ioe);
         } finally {
@@ -391,7 +361,6 @@ public class ConnectorIntegrationUtil {
             }
         }
         return stringBuilder.toString();
-
     }
 
     /**
@@ -409,28 +378,22 @@ public class ConnectorIntegrationUtil {
 
     public static JSONObject sendRestRequest(boolean isAuthorised, String httpMethod, String parameters, Properties connectorProperties)
             throws IOException, NoSuchAlgorithmException, InvalidKeyException, JSONException {
-
         if (isAuthorised) {
-
             String processedParameters = processParameters(parameters);
             String signature = generateSignature(httpMethod, processedParameters, connectorProperties);
             String url = connectorProperties.getProperty("apiUrl")
                     + "?" + processedParameters + "&" + OAUTH_SIGNATURE + "=" + signature;
-
             return sendRequest(httpMethod, url, null);
         } else {
             return sendRequest(httpMethod, connectorProperties.getProperty("apiUrl") + "?" + parameters, null);
         }
-
     }
 
     public static String processParameters(String parameters) {
 
         parameters = parameters.replace("dummynonce", Long.toString((long) (Math.random() * 100000000)));
         parameters = parameters.replace("dummytimestamp", String.valueOf((System.currentTimeMillis() / 1000)));
-
         return parameters;
-
     }
 
     public static String generateSignature(String httpMethod, String processedParameters, Properties connectorProperties)
@@ -441,28 +404,20 @@ public class ConnectorIntegrationUtil {
         baseString.append(httpMethod);
         baseString.append("&");
         baseString.append(URLEncoder.encode(connectorProperties.getProperty("apiUrl"), ENC));
-
        /* generating the timestamp and nonce then replace the
         dummy oauth_nonce and oauth_timestamp with generated values.*/
-
         //String parameters = msgctx.getProperty(URL_PARAMETERS).toString();
         //parameters = parameters.replace(" ","%20"); // URL encode the spaces in url.
-
         baseString.append("&");
         baseString.append(URLEncoder.encode(processedParameters, ENC));
-
         //msgctx.setProperty(URL_PARAMETERS,parameters);
-
         byte[] keyBytes = (connectorProperties.getProperty("consumerKeySecret")
                 + "&" + connectorProperties.getProperty("accessTokenSecret")).getBytes(ENC);
-
         SecretKey key = new SecretKeySpec(keyBytes, HMAC_SHA1);
-
         Mac mac = Mac.getInstance(HMAC_SHA1);
         mac.init(key);
         Base64 base64 = new Base64();
         // encode it, base64 it, change it to string.
-
         String signature =
                 new String(base64.encode(mac.doFinal(baseString.toString().getBytes(ENC))), ENC).trim();
         return URLEncoder.encode(signature, ENC);
@@ -490,16 +445,13 @@ public class ConnectorIntegrationUtil {
                 }
             }
         }
-
         HttpURLConnection httpConn = (HttpURLConnection) connection;
         InputStream response;
-
         if (httpConn.getResponseCode() >= 400) {
             response = httpConn.getErrorStream();
         } else {
             response = connection.getInputStream();
         }
-
         String out = "{}";
         if (response != null) {
             StringBuilder sb = new StringBuilder();
@@ -508,21 +460,13 @@ public class ConnectorIntegrationUtil {
             while ((len = response.read(bytes)) != -1) {
                 sb.append(new String(bytes, 0, len));
             }
-
             if (!sb.toString().trim().isEmpty()) {
                 out = sb.toString();
             }
         }
-
         OMElement omElement = AXIOMUtil.stringToOM(out);
-
         return omElement;
-
     }
-
-
-    //////////////////
-
 
     public static OMElement getXmlResponse(String httpMethod, String addUrl, String query) throws MalformedURLException, IOException,
             XMLStreamException {
@@ -537,7 +481,6 @@ public class ConnectorIntegrationUtil {
             connection.setRequestProperty("Accept-Charset", charset);
             connection.setRequestProperty("Content-Type", "application/json");
             OutputStream output = null;
-
 
             try {
                 output = connection.getOutputStream();
@@ -555,16 +498,13 @@ public class ConnectorIntegrationUtil {
             }
         }
         HttpURLConnection httpConn = (HttpURLConnection) connection;
-
         InputStream response;
-
         if (httpConn.getResponseCode() >= 400) {
             response = httpConn.getErrorStream();
             System.out.println("40000");
         } else {
             response = connection.getInputStream();
         }
-
         String out = "{}";
         if (response != null) {
             StringBuilder sb = new StringBuilder();
@@ -573,15 +513,11 @@ public class ConnectorIntegrationUtil {
             while ((len = response.read(bytes)) != -1) {
                 sb.append(new String(bytes, 0, len));
             }
-
             if (!sb.toString().trim().isEmpty()) {
                 out = sb.toString();
             }
         }
-
         OMElement omElement = AXIOMUtil.stringToOM(out);
-
         return omElement;
     }
-
 }

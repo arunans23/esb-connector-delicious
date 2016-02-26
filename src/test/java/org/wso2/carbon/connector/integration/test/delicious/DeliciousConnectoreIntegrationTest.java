@@ -44,7 +44,6 @@ public class DeliciousConnectoreIntegrationTest extends ConnectorIntegrationTest
         invalidAuthorization = new String(Base64.encodeBase64(invalidConcatString.getBytes()));
     }
 
-
     @Override
     protected void cleanup() {
         axis2Client.destroy();
@@ -121,7 +120,6 @@ public class DeliciousConnectoreIntegrationTest extends ConnectorIntegrationTest
         OMElement omElementD = responseDirect.sendXMLRequestWithBasic(connectorProperties.getProperty("Apiurl") + "/v1/posts/recent?&count=1", "", validAuthorization);
 
         Assert.assertTrue(omElementD.getFirstElement().getAttributeValue(QName.valueOf("description")).equals(connectorProperties.getProperty("inputDescription")));
-
     }
 
 
@@ -143,9 +141,7 @@ public class DeliciousConnectoreIntegrationTest extends ConnectorIntegrationTest
         OMElement omElementD = responseDirect.sendXMLRequestWithBasic(connectorProperties.getProperty("Apiurl") + "/v1/posts/all?hashes", "", validAuthorization);
 
         Assert.assertTrue(omElementC.toString().equals(omElementD.toString()));
-
     }
-
 
     /**
      * Positive test case for getDates method with mandatory parameters.
@@ -166,7 +162,6 @@ public class DeliciousConnectoreIntegrationTest extends ConnectorIntegrationTest
 
         Assert.assertTrue(omElementC.toString().equals(omElementD.toString()));
     }
-
 
     /**
      * Positive test case for deletePost method with mandatory parameters.
@@ -210,7 +205,6 @@ public class DeliciousConnectoreIntegrationTest extends ConnectorIntegrationTest
         Assert.assertTrue(omElementC.toString().equals(omElementD.toString()));
     }
 
-
     /**
      * Positive test case for getRecentPosts method with mandatory parameters.
      */
@@ -230,7 +224,6 @@ public class DeliciousConnectoreIntegrationTest extends ConnectorIntegrationTest
 
         Assert.assertTrue(omElementC.toString().equals(omElementD.toString()));
     }
-
 
     /**
      * Positive test case for suggestPopularTags method with mandatory parameters.
@@ -253,7 +246,6 @@ public class DeliciousConnectoreIntegrationTest extends ConnectorIntegrationTest
         Assert.assertTrue(omElementC.toString().equals(omElementD.toString()));
     }
 
-
     /**
      * Positive test case for lastUpdatedTime method with mandatory parameters.
      */
@@ -274,11 +266,9 @@ public class DeliciousConnectoreIntegrationTest extends ConnectorIntegrationTest
         Assert.assertTrue(omElementC.toString().equals(omElementD.toString()));
     }
 
-
     /**
      * Positive test case for getTags method with mandatory parameters.
      */
-
     @Test(priority = 2, groups = {"wso2.esb"}, description = "delicious {getTags} integration test with mandatory parameters")
     public void testDeliciousgetTagsWithMandatoryParameters() throws Exception {
 
@@ -299,7 +289,6 @@ public class DeliciousConnectoreIntegrationTest extends ConnectorIntegrationTest
     /**
      * Positive test case for allTagsBundles method with mandatory parameters.
      */
-
     @Test(priority = 2, groups = {"wso2.esb"}, description = "delicious {allTagsBundles} integration test with mandatory parameters")
     public void testDeliciousallTagsBundlesWithMandatoryParameters() throws Exception {
 
@@ -341,7 +330,6 @@ public class DeliciousConnectoreIntegrationTest extends ConnectorIntegrationTest
     /**
      * Positive test case for deleteTagsBundles method with mandatory parameters.
      */
-
     @Test(priority = 5, groups = {"wso2.esb"}, description = "delicious {deleteTagsBundles} integration test with mandatory parameters")
     public void testDeliciousdeleteTagsBundlesWithMandatoryParameters() throws Exception {
 
@@ -380,7 +368,6 @@ public class DeliciousConnectoreIntegrationTest extends ConnectorIntegrationTest
         Assert.assertTrue(omElementC.toString().equals(omElementD.toString()));
     }
 
-
     /**
      * Negetive test case for postGetAll method with Negetive parameters.
      */
@@ -403,7 +390,6 @@ public class DeliciousConnectoreIntegrationTest extends ConnectorIntegrationTest
         Assert.assertTrue(omElementC.toString().equals(omElementD.toString()));
     }
 
-
     /**
      * Negetive test case for addNewPost method with Negetive parameters.
      */
@@ -423,7 +409,6 @@ public class DeliciousConnectoreIntegrationTest extends ConnectorIntegrationTest
 
         Assert.assertTrue(omElementC.toString().equals(omElementD.toString()));
     }
-
 
     /**
      * Negetive test case for postAllHashes method with Negetive parameters.
@@ -447,7 +432,6 @@ public class DeliciousConnectoreIntegrationTest extends ConnectorIntegrationTest
         Assert.assertTrue(omElementC.toString().equals(omElementD.toString()));
     }
 
-
     /**
      * Negetive test case for getDates method with Negetive parameters.
      */
@@ -469,7 +453,6 @@ public class DeliciousConnectoreIntegrationTest extends ConnectorIntegrationTest
 
         Assert.assertTrue(omElementC.toString().equals(omElementD.toString()));
     }
-
 
     /**
      * Negetive test case for deletePost method with Negetive parameters.

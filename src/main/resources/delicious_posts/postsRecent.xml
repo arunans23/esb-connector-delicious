@@ -17,16 +17,12 @@
  ~  under the License.
 -->
 <template name="getRecentPosts" xmlns="http://ws.apache.org/ns/synapse">
-
     <parameter name="tag" description="{TAG} optional — Filter by this tag"/>
     <parameter name="count"
                description="{1..100} optional — Number of items to retrieve (Default:15, Maximum:100)"/>
-
     <sequence>
-
         <property name="uri.var.recentTag" expression="$func:tag" type="STRING"/>
         <property name="uri.var.recentCount" expression="$func:count" type="STRING"/>
-
         <filter
                 xpath="(not(get-property('uri.var.recentTag') = '' or (not(string(get-property('uri.var.recentTag'))))))">
             <then>
@@ -34,7 +30,6 @@
                           expression="fn:concat(get-property('uri.var.apiParameters'),'&amp;tag=',get-property('uri.var.recentTag'))"/>
             </then>
         </filter>
-
         <filter
                 xpath="(not(get-property('uri.var.recentCount') = '' or (not(string(get-property('uri.var.recentCount'))))))">
             <then>
@@ -42,9 +37,7 @@
                           expression="fn:concat(get-property('uri.var.apiParameters'),'&amp;count=',get-property('uri.var.recentCount'))"/>
             </then>
         </filter>
-
         <property name="Accept-Encoding" value="deflate" scope="transport"/>
-
         <call>
             <endpoint>
                 <http method="GET"
