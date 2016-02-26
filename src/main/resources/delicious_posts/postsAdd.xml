@@ -17,7 +17,6 @@
  ~  under the License.
 -->
 <template name="addNewPost" xmlns="http://ws.apache.org/ns/synapse">
-
     <parameter name="url" description="required — The url of the item"/>
     <parameter name="description" description="required — The description of the item."/>
     <parameter name="extended" description="optional — Notes for the item."/>
@@ -26,9 +25,7 @@
     <parameter name="replace"
                description="{no} optional — Don’t replace post if given url has already been posted"/>
     <parameter name="shared" description="{no} optional — Make the item private"/>
-
     <sequence>
-
         <property name="uri.var.inputUrl" expression="$func:url" type="STRING"/>
         <property name="uri.var.inputDescription" expression="$func:description" type="STRING"/>
         <property name="uri.var.inputExtended" expression="$func:extended" type="STRING"/>
@@ -36,10 +33,8 @@
         <property name="uri.var.inputDt" expression="$func:dt" type="STRING"/>
         <property name="uri.var.inputReplace" expression="$func:replace" type="STRING"/>
         <property name="uri.var.inputShare" expression="$func:shared" type="STRING"/>
-
         <property name="uri.var.apiParameters"
                   expression="fn:concat(get-property('uri.var.apiParameters'),'&amp;url=',get-property('uri.var.inputUrl'),'&amp;description=',get-property('uri.var.inputDescription'))"/>
-
         <filter
                 xpath="(not(get-property('uri.var.inputExtended') = '' or (not(string(get-property('uri.var.inputExtended'))))))">
             <then>
@@ -47,7 +42,6 @@
                           expression="fn:concat(get-property('uri.var.apiParameters'),'&amp;extended=',get-property('uri.var.inputExtended'))"/>
             </then>
         </filter>
-
         <filter
                 xpath="(not(get-property('uri.var.inputTags') = '' or (not(string(get-property('uri.var.inputTags'))))))">
             <then>
@@ -55,7 +49,6 @@
                           expression="fn:concat(get-property('uri.var.apiParameters'),'&amp;tags=',get-property('uri.var.inputTags'))"/>
             </then>
         </filter>
-
         <filter
                 xpath="(not(get-property('uri.var.inputDt') = '' or (not(string(get-property('uri.var.inputDt'))))))">
             <then>
@@ -63,7 +56,6 @@
                           expression="fn:concat(get-property('uri.var.apiParameters'),'&amp;dt=',get-property('uri.var.inputDt'))"/>
             </then>
         </filter>
-
         <filter
                 xpath="(not(get-property('uri.var.inputReplace') = '' or (not(string(get-property('uri.var.inputReplace'))))))">
             <then>
@@ -71,7 +63,6 @@
                           expression="fn:concat(get-property('uri.var.apiParameters'),'&amp;replace=',get-property('uri.var.inputReplace'))"/>
             </then>
         </filter>
-
         <filter
                 xpath="(not(get-property('uri.var.inputShare') = '' or (not(string(get-property('uri.var.inputShare'))))))">
             <then>
@@ -79,9 +70,7 @@
                           expression="fn:concat(get-property('uri.var.apiParameters'),'&amp;share=',get-property('uri.var.inputShare'))"/>
             </then>
         </filter>
-
         <property name="Accept-Encoding" value="deflate" scope="transport"/>
-
         <call>
             <endpoint>
                 <http method="GET"

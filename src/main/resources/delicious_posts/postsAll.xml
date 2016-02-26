@@ -17,7 +17,6 @@
  ~  under the License.
 -->
 <template name="getAllPosts" xmlns="http://ws.apache.org/ns/synapse">
-
     <parameter name="tag_separator"
                description="{comma} optional — (Recommended) Returns tags separated by a comma, instead of a space character."/>
     <parameter name="tag" description="{TAG} optional — Filter by this tag."/>
@@ -30,9 +29,7 @@
                description="{CCYY-MM-DDThh:mm:ssZ} optional — Filter for posts on this date or earlier."/>
     <parameter name="meta"
                description="{yes} optional — Include change detection signatures on each item in a ‘meta’ attribute."/>
-
     <sequence>
-
         <property name="uri.var.tag_separator" expression="$func:tag_separator" type="STRING"/>
         <property name="uri.var.tag" expression="$func:tag" type="STRING"/>
         <property name="uri.var.start" expression="$func:start" type="STRING"/>
@@ -40,7 +37,6 @@
         <property name="uri.var.fromdt" expression="$func:fromdt" type="STRING"/>
         <property name="uri.var.todt" expression="$func:todt" type="STRING"/>
         <property name="uri.var.meta" expression="$func:meta" type="STRING"/>
-
         <filter
                 xpath="(not(get-property('uri.var.tag_separator') = '' or (not(string(get-property('uri.var.tag_separator'))))))">
             <then>
@@ -55,7 +51,6 @@
                           expression="fn:concat(get-property('uri.var.apiParameters'),'&amp;tag=',get-property('uri.var.tag'))"/>
             </then>
         </filter>
-
         <filter
                 xpath="(not(get-property('uri.var.start') = '' or (not(string(get-property('uri.var.start'))))))">
             <then>
@@ -91,9 +86,7 @@
                           expression="fn:concat(get-property('uri.var.apiParameters'),'&amp;meta=',get-property('uri.var.meta'))"/>
             </then>
         </filter>
-
         <property name="Accept-Encoding" value="deflate" scope="transport"/>
-
         <call>
             <endpoint>
                 <http method="GET"
@@ -101,5 +94,4 @@
             </endpoint>
         </call>
     </sequence>
-
 </template>

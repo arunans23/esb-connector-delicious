@@ -18,12 +18,9 @@
 -->
 <template name="allTagsBundles" xmlns="http://ws.apache.org/ns/synapse">
     <parameter name="bundle" description="just the named bundle"/>
-
     <sequence>
-
         <property name="uri.var.bundle" expression="$func:bundle" type="STRING"/>
         <property name="Accept-Encoding" value="deflate" scope="transport"/>
-
         <filter
                 xpath="(not(get-property('uri.var.bundle') = '' or (not(string(get-property('uri.var.bundle'))))))">
             <then>
@@ -31,7 +28,6 @@
                           expression="fn:concat('&amp;bundle=',get-property('uri.var.bundle'))"/>
             </then>
         </filter>
-
         <call>
             <endpoint>
                 <http method="GET"
