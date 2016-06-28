@@ -4,17 +4,18 @@ Pre-requisites:
 
  - Maven 3.x
  - Java 1.6 or above
- - The org.wso2.esb.integration.integration-base project is required. The test suite has been configured to download this project automatically. If the automatic download fails, download the following project and compile it using the mvn clean install command to update your local repository:
+ - The org.wso2.esb.integration.integration-base project is required. The test suite has been configured to download this project automatically.
+   If the automatic download fails, download the following project and compile it using the mvn clean install command to update your local repository:
         https://github.com/wso2-extensions/esb-integration-base
 
 Tested Platform: 
 
  - UBUNTU 14.04
- - WSO2 ESB 4.9.0
+ - WSO2 ESB 4.9.0, 5.0.0-BETA
  - Java 1.7
 
 STEPS:
- 1. Download ESB 4.9.0 from official website.
+ 1. Download ESB from official website.
 
  2. This ESB should be configured as below;
   Please make sure that the below mentioned Axis configurations are enabled (\repository\conf\axis2\axis2.xml).
